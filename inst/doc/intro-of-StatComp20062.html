@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="RayLiu" />
+
+<meta name="date" content="2020-12-13" />
+
+<title>StatComp20062</title>
+
+<style type="text/css">
+a.anchor-section {margin-left: 10px; visibility: hidden; color: inherit;}
+a.anchor-section::before {content: '#';}
+.hasAnchor:hover a.anchor-section {visibility: visible;}
+</style>
+<script>// Anchor sections v1.0 written by Atsushi Yasumoto on Oct 3rd, 2020.
+document.addEventListener('DOMContentLoaded', function() {
+  // Do nothing if AnchorJS is used
+  if (typeof window.anchors === 'object' && anchors.hasOwnProperty('hasAnchorJSLink')) {
+    return;
+  }
+
+  const h = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
+
+  // Do nothing if sections are already anchored
+  if (Array.from(h).some(x => x.classList.contains('hasAnchor'))) {
+    return null;
+  }
+
+  // Use section id when pandoc runs with --section-divs
+  const section_id = function(x) {
+    return ((x.classList.contains('section') || (x.tagName === 'SECTION'))
+            ? x.id : '');
+  };
+
+  // Add anchors
+  h.forEach(function(x) {
+    const id = x.id || section_id(x.parentElement);
+    if (id === '') {
+      return null;
+    }
+    let anchor = document.createElement('a');
+    anchor.href = '#' + id;
+    anchor.classList = ['anchor-section'];
+    x.classList.add('hasAnchor');
+    x.appendChild(anchor);
+  });
+});
+</script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">StatComp20062</h1>
+<h4 class="author">RayLiu</h4>
+<h4 class="date">2020-12-13</h4>
+
+
+
+<div id="overview" class="section level2">
+<h2>Overview</h2>
+<p><strong>StatComp20062</strong> is a simple R package developed to compute the standard error of an estimator with jackknife method, and to compute the knockoff matrix which is useful in knockoff method. Two functions are included, namely, <em>jack</em> and <em>create.equi.X</em> . For each function, examples are given.</p>
+</div>
+<div id="introduction-to-jack" class="section level2">
+<h2>Introduction to <em>jack</em></h2>
+<p>The source R code for <em>jack</em> is as follows:</p>
+<p><strong><em>Jackknife</em></strong></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">jack &lt;-<span class="st"> </span><span class="cf">function</span>(data,<span class="dt">fun=</span><span class="ot">NULL</span>){</a>
+<a class="sourceLine" id="cb1-2" title="2">  theta.hat &lt;-<span class="st"> </span><span class="kw">fun</span>(data)</a>
+<a class="sourceLine" id="cb1-3" title="3">  n &lt;-<span class="st"> </span><span class="kw">length</span>(data)      <span class="co">#sample size</span></a>
+<a class="sourceLine" id="cb1-4" title="4">  M &lt;-<span class="st"> </span><span class="kw">numeric</span>(n)</a>
+<a class="sourceLine" id="cb1-5" title="5">  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>n) { <span class="co">#leave one out</span></a>
+<a class="sourceLine" id="cb1-6" title="6">    y &lt;-<span class="st"> </span>data[<span class="op">-</span>i]</a>
+<a class="sourceLine" id="cb1-7" title="7">    M[i] &lt;-<span class="st"> </span><span class="kw">fun</span>(y)</a>
+<a class="sourceLine" id="cb1-8" title="8">  }</a>
+<a class="sourceLine" id="cb1-9" title="9">  Mbar &lt;-<span class="st"> </span><span class="kw">mean</span>(M)</a>
+<a class="sourceLine" id="cb1-10" title="10">  se.jack &lt;-<span class="st"> </span><span class="kw">sqrt</span>(((n <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)<span class="op">/</span>n) <span class="op">*</span><span class="st"> </span><span class="kw">sum</span>((M <span class="op">-</span><span class="st"> </span>Mbar)<span class="op">^</span><span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb1-11" title="11">  <span class="kw">return</span>(se.jack)</a>
+<a class="sourceLine" id="cb1-12" title="12">}</a></code></pre></div>
+</div>
+<div id="introduction-to-create.equi.x" class="section level2">
+<h2>Introduction to <em>create.equi.X</em></h2>
+<p>The source R code for <em>create.equi.X</em> is as follows:</p>
+<p><strong><em>knockoff</em></strong></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">create_equi_X &lt;-<span class="st"> </span><span class="cf">function</span>(X){</a>
+<a class="sourceLine" id="cb2-2" title="2">  n =<span class="st"> </span><span class="kw">nrow</span>(X)</a>
+<a class="sourceLine" id="cb2-3" title="3">  p =<span class="st"> </span><span class="kw">ncol</span>(X)</a>
+<a class="sourceLine" id="cb2-4" title="4">  <span class="co">#The rows of input matrix must be more than the columns num</span></a>
+<a class="sourceLine" id="cb2-5" title="5">  <span class="cf">if</span> (n <span class="op">&lt;</span><span class="st"> </span><span class="dv">2</span><span class="op">*</span>p) </a>
+<a class="sourceLine" id="cb2-6" title="6">    <span class="kw">stop</span>(<span class="st">&quot;Input X must have dimensions n &gt;= 2*p&quot;</span>) </a>
+<a class="sourceLine" id="cb2-7" title="7">  <span class="co">#Compute l-2 norm of each column</span></a>
+<a class="sourceLine" id="cb2-8" title="8">  Xsqure &lt;-<span class="st"> </span><span class="kw">apply</span>(X,<span class="dv">2</span>,<span class="dt">FUN =</span> <span class="cf">function</span>(x)<span class="kw">sqrt</span>(<span class="kw">sum</span>(x<span class="op">^</span><span class="dv">2</span>))) </a>
+<a class="sourceLine" id="cb2-9" title="9">  <span class="co">#Standardize the input matrix by column</span></a>
+<a class="sourceLine" id="cb2-10" title="10">  X3 &lt;-<span class="st"> </span><span class="kw">sweep</span>(X,<span class="dv">2</span>,Xsqure,<span class="dt">FUN =</span> <span class="st">&quot;/&quot;</span>)</a>
+<a class="sourceLine" id="cb2-11" title="11">  <span class="co">#Compute the Gram matrix of the input matrix, which is named as &#39;Sigma&#39; in the &#39;knockoff&#39; paper</span></a>
+<a class="sourceLine" id="cb2-12" title="12">  Gram &lt;-<span class="st"> </span><span class="kw">t</span>(X3)<span class="op">%*%</span>X3</a>
+<a class="sourceLine" id="cb2-13" title="13">  GramD &lt;-<span class="st"> </span><span class="kw">eigen</span>(Gram)</a>
+<a class="sourceLine" id="cb2-14" title="14">  sj &lt;-<span class="st"> </span><span class="kw">min</span>(<span class="dv">2</span><span class="op">*</span><span class="kw">min</span>(GramD<span class="op">$</span>values),<span class="dv">1</span>)<span class="co">#extract the minimum eigenvalue of &#39;Sigma&#39;, to compute the identical s_j for all j</span></a>
+<a class="sourceLine" id="cb2-15" title="15">  diags &lt;-<span class="st"> </span><span class="kw">diag</span>(<span class="kw">rep</span>(sj,p))<span class="co">#construct diag{s}</span></a>
+<a class="sourceLine" id="cb2-16" title="16">  <span class="co">#Compute the matrix C in the formula</span></a>
+<a class="sourceLine" id="cb2-17" title="17">  CC &lt;-<span class="st"> </span><span class="dv">2</span><span class="op">*</span>diags<span class="op">-</span><span class="st"> </span>diags<span class="op">%*%</span><span class="kw">solve</span>(Gram)<span class="op">%*%</span>diags</a>
+<a class="sourceLine" id="cb2-18" title="18">  a &lt;-<span class="st"> </span><span class="kw">svd</span>(CC)</a>
+<a class="sourceLine" id="cb2-19" title="19">  C &lt;-<span class="st"> </span><span class="kw">t</span>(a<span class="op">$</span>u<span class="op">%*%</span><span class="kw">diag</span>(<span class="kw">sqrt</span>(a<span class="op">$</span>d)))</a>
+<a class="sourceLine" id="cb2-20" title="20">  <span class="co">#Compute the matrix Utide in the formula, which is orthogonal to the X3</span></a>
+<a class="sourceLine" id="cb2-21" title="21">  Utide &lt;-<span class="st"> </span><span class="kw">svd</span>(X3,<span class="dt">nu=</span>n,<span class="dt">nv=</span><span class="dv">0</span>)<span class="op">$</span>u[,(n<span class="op">-</span>p<span class="op">+</span><span class="dv">1</span>)<span class="op">:</span>n]</a>
+<a class="sourceLine" id="cb2-22" title="22">  <span class="co">#Compute the knockoff matrix Xtide </span></a>
+<a class="sourceLine" id="cb2-23" title="23">  Xtide &lt;-<span class="st"> </span>X3<span class="op">%*%</span>(<span class="kw">diag</span>(<span class="dt">nrow =</span> p)<span class="op">-</span><span class="kw">solve</span>(Gram)<span class="op">%*%</span>diags)<span class="op">+</span>Utide<span class="op">%*%</span>C</a>
+<a class="sourceLine" id="cb2-24" title="24">  <span class="kw">structure</span>(<span class="kw">list</span>(<span class="dt">X =</span> X3, <span class="dt">Xk =</span> Xtide, <span class="dt">s_j =</span> sj), <span class="dt">class =</span> <span class="st">&quot;knockoff.variables&quot;</span>)</a>
+<a class="sourceLine" id="cb2-25" title="25">}</a></code></pre></div>
+<p>In order to use the knockoff filter, we’d firstly need to construct knockoff matrix.Specifically, to construct the knockoffs, we first calculate the Gram matrix <span class="math inline">\(\Sigma=X^TX\)</span> of the original features, after normalizing each feature such that $_{jj}=|X_j|^2=1 $ for all j. We will ensure that these knockoff features obey <span class="math display">\[\tilde X^T\tilde X=\Sigma,\quad X^T\tilde X=\Sigma-diag\{s\}\]</span></p>
+<p>where <span class="math inline">\(s\)</span> is a p-dimensional nonnegative vector.</p>
+<p>To generate <span class="math inline">\(\tilde X\)</span>, these two authors in the paper proposed a solution, which shows below: <span class="math display">\[\tilde X=X(I-\Sigma^{-1}diag\{s\})+\tilde UC\]</span></p>
+<p>where <span class="math inline">\(\tilde U \in R_{n×p}\)</span> is an orthonormal matrix whose column space is orthogonal to that of <span class="math inline">\(X\)</span> so that <span class="math inline">\(\tilde U^TX = 0\)</span>. <span class="math inline">\(C^⊤C = 2diag\{s\} − diag{s}\Sigma^{−1} diag\{s\} \succcurlyeq 0\)</span>.</p>
+<p>The selection of <span class="math inline">\(s\)</span> that commit the constraints is crutial. In my code, I use the Equi-correlated knockoffs: Here, <span class="math inline">\(s_j = 2\lambda _{min}(\Sigma) \wedge 1\)</span> for all j, so that all the correlations take on the identical value <span class="math display">\[  \left &lt;X_j ,\tilde X_j\right&gt; = 1− 2\lambda _{min}(\Sigma) \wedge 1.\]</span></p>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

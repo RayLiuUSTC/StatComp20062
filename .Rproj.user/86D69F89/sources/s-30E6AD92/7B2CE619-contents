@@ -1,0 +1,32 @@
+function (X, method = c("sdp", "equi"), sigma = NULL, 
+          y = NULL, randomize = F) 
+{
+  method = match.arg(method)
+  n = nrow(X)
+  p = ncol(X)
+  if (n <= p) 
+    stop("Input X must have dimensions n > p")
+  else if (n < 2 * p) {
+    warning("Input X has dimensions p < n < 2p. ", 
+            "Augmenting the model with extra rows.", immediate. = T)
+    X.svd = svd(X, nu = n, nv = 0)
+    u2 = X.svd$u[, (p + 1):n]
+    X = rbind(X, matrix(0, 2 * p - n, p))
+    if (is.null(sigma)) {
+      if (is.null(y)) {
+        stop("Either the noise level \"sigma\" or the response variables \"y\" must\n             be provided in order to augment the data with extra rows.")
+      }
+      else {
+        sigma = sqrt(mean((t(u2) %*% y)^2))
+      }
+    }
+    if (randomize) 
+      y.extra = rnorm(2 * p - n, sd = sigma)
+    else y.extra = with_seed(0, rnorm(2 * p - n, sd = sigma))
+    y = c(y, y.extra)
+  }
+  X = normc(X, center = F)
+  Xk = switch(match.arg(method), equi = create_equicorrelated(X, 
+                                                              randomize), sdp = create_sdp(X, randomize))
+  structure(list(X = X, Xk = Xk, y = y), class = "knockoff.variables")
+}

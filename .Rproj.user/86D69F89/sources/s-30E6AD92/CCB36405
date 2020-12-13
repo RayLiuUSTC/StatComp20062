@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1607852082440.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2521765570",
+    "id" : "CCB36405",
+    "lastKnownWriteTime" : 1607851395,
+    "last_content_update" : 1607851395,
+    "path" : "C:/Users/DRZCW/Desktop/StatComp20062/.gitignore",
+    "project_path" : ".gitignore",
+    "properties" : {
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 7,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "gitignore"
+}
