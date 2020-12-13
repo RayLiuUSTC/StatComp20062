@@ -59,18 +59,7 @@ create_equi_X <- function(X){
 }
 ```
 
-In order to use the knockoff filter, we'd firstly need to construct knockoff matrix.Specifically, to construct the knockoffs, we first calculate the Gram matrix $\Sigma=X^TX$ of the original features, after normalizing each feature such that $\Sigma_{jj}=\|X_j\|^2=1 $ for all j. We will ensure that these knockoff features obey
-$$\tilde X^T\tilde X=\Sigma,\quad X^T\tilde X=\Sigma-diag\{s\}$$
 
-where $s$ is a p-dimensional nonnegative vector.
-
-To generate $\tilde X$, these two authors in the paper proposed a solution, which shows below:
-$$\tilde X=X(I-\Sigma^{-1}diag\{s\})+\tilde UC$$
-
-where $\tilde U \in R_{n×p}$ is an orthonormal matrix whose column space is orthogonal to that of $X$ so that $\tilde U^TX = 0$. $C^⊤C = 2diag\{s\} − diag{s}\Sigma^{−1} diag\{s\} \succcurlyeq 0$.
-
-The selection of $s$ that commit the constraints is crutial. In my code, I use the Equi-correlated knockoffs: Here, $s_j = 2\lambda _{min}(\Sigma) \wedge 1$ for all j, so that all the correlations take on the identical value
-$$  \left <X_j ,\tilde X_j\right> = 1− 2\lambda _{min}(\Sigma) \wedge 1.$$
 
 
 
