@@ -10,7 +10,7 @@
 #' \dontrun{
 #' n2 <- 200;p2 <- 100
 #' X2 = matrix(rnorm(n2*p2),n2)
-#' X2q <- create.equi.X(X2)}
+#' X2q <- create_equi_X(X2)}
 #' @export
 create_equi_X <- function(X){
   n = nrow(X)
