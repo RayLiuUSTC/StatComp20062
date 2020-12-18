@@ -1,0 +1,16 @@
+Package: StatComp20062
+Type: Package
+Title: Two functions in statscomp
+Version: 1.0
+Date: 2020-12-12
+Author: RayLiu
+Maintainer: RayLiu <870083058@qq.com>
+Description: The package is a collection of two functions about my recent work. One is related to the knockoffs method used in the variable selection while the other is related to resampling.
+License: GPL (>= 2)
+Imports: microbenchmark, knitr, rmarkdown, MASS, RANN, Ball, boot, bootstrap, devtools, energy, parallel,Rcpp (>= 1.0.5)
+LinkingTo: Rcpp
+RoxygenNote: 7.1.1
+Encoding: UTF-8
+VignetteBuilder: knitr
+URL: http://github.com/RayLiuUSTC/StatComp20062
+BugReports: http://github.com/RayLiuUSTC/StatComp20062/issues

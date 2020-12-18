@@ -12,7 +12,7 @@
 
 <meta name="author" content="RayLiu" />
 
-<meta name="date" content="2020-12-13" />
+<meta name="date" content="2020-12-18" />
 
 <title>Answers of StatComp Homework</title>
 
@@ -573,7 +573,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <h1 class="title toc-ignore">Answers of StatComp Homework</h1>
 <h4 class="author">RayLiu</h4>
-<h4 class="date">2020-12-13</h4>
+<h4 class="date">2020-12-18</h4>
 
 
 
@@ -2666,9 +2666,9 @@ q=\frac{2n_{BB}+n_{BO}+n_{AB}}{2n}
 <pre><code>## Warning: 程辑包&#39;microbenchmark&#39;是用R版本4.0.3 来建造的</code></pre>
 <div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb85-1" title="1">ts &lt;-<span class="st"> </span><span class="kw">microbenchmark</span>(<span class="dt">rw2L =</span> <span class="kw">rw.Metropolis.L</span>(sigma[<span class="dv">2</span>], x0, N), <span class="dt">rw2C =</span> <span class="kw">rw_Metropolis</span>(sigma[<span class="dv">2</span>], x0, N))</a>
 <a class="sourceLine" id="cb85-2" title="2"><span class="kw">summary</span>(ts)[,<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">6</span>)]</a></code></pre></div>
-<pre><code>##   expr       lq   median        uq
-## 1 rw2L 7267.680 7423.412 7667.5695
-## 2 rw2C  455.748  464.235  473.1175</code></pre>
+<pre><code>##   expr        lq    median       uq
+## 1 rw2L 7504.9290 7612.1055 7844.816
+## 2 rw2C  462.8535  470.7485  485.553</code></pre>
 <p>Summary:the corresponding generated random numbers are close to those by the R function, but the generating speed is more fast.</p>
 </div>
 </div>
